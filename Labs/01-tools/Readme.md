@@ -11,7 +11,7 @@ Link to your `Digital-electronics-2` GitHub repository:
    * `|`   OR
    * `&`   AND
    * `^`   XOR
-   * `~`   Negace
+   * `~`   NOT
    * `<<`  posun bitu vlevo
    * `>>`  posun bitu vpravo
 
