@@ -20,8 +20,10 @@
  * directives. This is a common mistake.
  */
 #define LED_GREEN   PB5 // AVR pin where green LED is connected
-#define SHORT_DELAY 120 // Delay in milliseconds
-#define LONG_DELAY 250
+#define SHORT_DELAY 200 // Delay in milliseconds
+#define LONG_DELAY 600 // Delay in milliseconds
+#define SPACE_DELAY 1000 // Delay in milliseconds
+#define RETURN_DELAY 2000
 #ifndef F_CPU           // Preprocessor directive allows for conditional
                         // compilation. The #ifndef means "if not defined".
 # define F_CPU 16000000 // CPU frequency in Hz required for delay
@@ -54,17 +56,51 @@ int main(void)
     while (1)
     {
         // Pause several milliseconds
-        _delay_ms(SHORT_DELAY);
-		
+        _delay_ms(SPACE_DELAY);
 
-        // Invert LED in Data Register
-        // PORTB = PORTB xor 0010 0000
+		// inscription in Morse code "VUT" (...-  ..-  -)
         PORTB = PORTB ^ (1<<LED_GREEN);
-		
-		_delay_ms(LONG_DELAY);
+		_delay_ms(SHORT_DELAY);
 		PORTB = PORTB & ~(1<<LED_GREEN);
+		_delay_ms(SPACE_DELAY);
 		
+		PORTB = PORTB ^ (1<<LED_GREEN);
+		_delay_ms(SHORT_DELAY);
+		PORTB = PORTB & ~(1<<LED_GREEN);
+		_delay_ms(SPACE_DELAY);
 		
+        PORTB = PORTB ^ (1<<LED_GREEN);
+	   _delay_ms(SHORT_DELAY);
+		PORTB = PORTB & ~(1<<LED_GREEN);
+	   _delay_ms(SPACE_DELAY);
+	   
+        PORTB = PORTB ^ (1<<LED_GREEN);
+        _delay_ms(LONG_DELAY);
+        PORTB = PORTB & ~(1<<LED_GREEN);
+        _delay_ms(SPACE_DELAY);	
+		  
+		
+        PORTB = PORTB ^ (1<<LED_GREEN);
+        _delay_ms(SHORT_DELAY);
+        PORTB = PORTB & ~(1<<LED_GREEN);
+        _delay_ms(SPACE_DELAY);	
+		
+        PORTB = PORTB ^ (1<<LED_GREEN);
+        _delay_ms(SHORT_DELAY);
+        PORTB = PORTB & ~(1<<LED_GREEN);
+        _delay_ms(SPACE_DELAY);		
+		
+        PORTB = PORTB ^ (1<<LED_GREEN);
+        _delay_ms(LONG_DELAY);
+        PORTB = PORTB & ~(1<<LED_GREEN);
+        _delay_ms(SPACE_DELAY);
+
+
+        PORTB = PORTB ^ (1<<LED_GREEN);
+        _delay_ms(LONG_DELAY);
+        PORTB = PORTB & ~(1<<LED_GREEN);
+        _delay_ms(SPACE_DELAY);
+			 
     }
 
     // Will never reach this
