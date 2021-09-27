@@ -56,7 +56,7 @@ int main(void)
     while (1)
     {
         // Pause several milliseconds
-        _delay_ms(SPACE_DELAY);
+        _delay_ms(RETURN_DELAY);
 
 		// inscription in Morse code "VUT" (...-  ..-  -)
         PORTB = PORTB ^ (1<<LED_GREEN);
