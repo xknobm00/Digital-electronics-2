@@ -20,7 +20,8 @@
  * directives. This is a common mistake.
  */
 #define LED_GREEN   PB5 // AVR pin where green LED is connected
-#define SHORT_DELAY 12 // Delay in milliseconds
+#define SHORT_DELAY 120 // Delay in milliseconds
+#define LONG_DELAY 250
 #ifndef F_CPU           // Preprocessor directive allows for conditional
                         // compilation. The #ifndef means "if not defined".
 # define F_CPU 16000000 // CPU frequency in Hz required for delay
@@ -54,10 +55,16 @@ int main(void)
     {
         // Pause several milliseconds
         _delay_ms(SHORT_DELAY);
+		
 
         // Invert LED in Data Register
         // PORTB = PORTB xor 0010 0000
         PORTB = PORTB ^ (1<<LED_GREEN);
+		
+		_delay_ms(LONG_DELAY);
+		PORTB = PORTB & ~(1<<LED_GREEN);
+		
+		
     }
 
     // Will never reach this
