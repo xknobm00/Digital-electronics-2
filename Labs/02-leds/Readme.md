@@ -18,11 +18,11 @@
 2. [Calculate LED resistor value](https://electronicsclub.info/leds.htm) for typical red and blue LEDs.
 
 &nbsp;
-![ohms law](Images/ohms_law.png)  = (5-2)/0,02 = 150 Ω
+![ohms law](Images/ohms_law.png)  (5-2)/0,02 = 150 Ω
 &nbsp;
 
 &nbsp;
-![ohms law](Images/ohms_law.png)  = (5-3)/0,02 = 100 Ω
+![ohms law](Images/ohms_law.png)  (5-3)/0,02 = 100 Ω
 &nbsp;
 
 | **LED color** | **Supply voltage** | **LED current** | **LED voltage** | **Resistor value** |
