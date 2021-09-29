@@ -59,7 +59,7 @@ R = \frac{V_{SUPPLY}-V_{LED}}{I} =
 
 Link to your `Digital-electronics-2` GitHub repository:
 
-   [https://github.com/...](https://github.com/...)
+   [https://github.com/xknobm00/Digital-electronics-2](https://github.com/xknobm00/Digital-electronics-2)
 
 
 ### Active-low and active-high LEDs
