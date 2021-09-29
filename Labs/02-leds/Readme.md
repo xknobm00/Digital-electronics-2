@@ -79,7 +79,7 @@ Link to your `Digital-electronics-2` GitHub repository:
 | **DDRB** | **PORTB** | **Direction** | **Internal pull-up resistor** | **Description** |
 | :-: | :-: | :-: | :-: | :-- |
 | 0 | 0 | input | no | Tri-state, high-impedance |
-| 0 | 1 | input | | |
+| 0 | 1 | input | yes | |
 | 1 | 0 | output | | |
 | 1 | 1 | output | | |
 
