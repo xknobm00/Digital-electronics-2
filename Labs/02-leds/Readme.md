@@ -173,7 +173,7 @@ int main(void)
         if (bit_is_clear(PIND, PD0))
         {
            PORTC = PORTC ^ (1<<LED_RED);
-		   PORTB = PORTB ^ (1<<LED_GREEN); 
+           PORTB = PORTB ^ (1<<LED_GREEN); 
         }
         
     }
