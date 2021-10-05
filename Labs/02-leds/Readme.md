@@ -105,8 +105,6 @@ int main(void)
     DDRC = DDRC | (1<<LED_RED);    
     PORTC = PORTC & ~(1<<LED_RED);
     
-    DDRD = DDRD
-    PORTD = PORTD
 
     // Configure the second LED at port C
 
