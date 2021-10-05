@@ -124,11 +124,7 @@ int main(void)
         PORTC = PORTC & ~(1<<LED_RED);       
         // WRITE YOUR CODE HERE
         
-        if (bit_is_clear(PIND, PD0))
-        {
-           PORTC = PORTC & ~(1<<LED_RED); 
-        }
-        
+
     }
 
     // Will never reach this
