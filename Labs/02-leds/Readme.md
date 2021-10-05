@@ -88,29 +88,29 @@ Link to your `Digital-electronics-2` GitHub repository:
 | :-: | :-: | :-- |
 | A | x | Microcontroller ATmega328P does not contain port A |
 | B | 0 | Yes (Arduino pin 8) |
-|   | 1 |  |
-|   | 2 |  |
-|   | 3 |  |
-|   | 4 |  |
-|   | 5 |  |
-|   | 6 |  |
-|   | 7 |  |
+|   | 1 | yes, pin 9 |
+|   | 2 | yes, pin 10 |
+|   | 3 | yes, pin 11 |
+|   | 4 | yes, pin 12 |
+|   | 5 | yes, pin 13 |
+|   | 6 | no |
+|   | 7 | no |
 | C | 0 | Yes (Arduino pin A0) |
-|   | 1 |  |
-|   | 2 |  |
-|   | 3 |  |
-|   | 4 |  |
-|   | 5 |  |
-|   | 6 |  |
-|   | 7 |  |
+|   | 1 | yes, pin A1 |
+|   | 2 | yes, pin A2 |
+|   | 3 | yes, pin A3 |
+|   | 4 | yes, pin A4, SDA |
+|   | 5 | yes, pin A5, SCL |
+|   | 6 | no |
+|   | 7 | no |
 | D | 0 | Yes (Arduino pin RX<-0) |
-|   | 1 |  |
-|   | 2 |  |
-|   | 3 |  |
-|   | 4 |  |
-|   | 5 |  |
-|   | 6 |  |
-|   | 7 |  |
+|   | 1 | yes, pin X->1 |
+|   | 2 | yes, pin 2 |
+|   | 3 | yes, pin -3 |
+|   | 4 | yes, pin 4 |
+|   | 5 | yes, pin -5 |
+|   | 6 | yes, pin -6 |
+|   | 7 | yes, pin 7 |
 
 
 2. Part of the C code listing with syntax highlighting, which blinks alternately with a pair of LEDs; let one LED is connected to port B and the other to port C:
