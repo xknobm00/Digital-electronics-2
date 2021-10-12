@@ -34,9 +34,40 @@ Link to your `Digital-electronics-2` GitHub repository:
 2. Part of the C code listing with syntax highlighting, which toggles LEDs only if push button is pressed. Otherwise, the value of the LEDs does not change. Use function from your GPIO library. Let the push button is connected to port D:
 
 ```c
-    // Configure Push button at port D and enable internal pull-up resistor
-    // WRITE YOUR CODE HERE
+/* Defines -----------------------------------------------------------*/
+#define LED_GREEN   PB5
+#define LED_RED   PC0     // AVR pin where green LED is connected
+#define BUTTON   PD0
+#define BLINK_DELAY 500
+#ifndef F_CPU
+# define F_CPU 16000000     // CPU frequency in Hz required for delay
+#endif
 
+/* Includes ----------------------------------------------------------*/
+#include <util/delay.h>     // Functions for busy-wait delay loops
+#include <avr/io.h>         // AVR device-specific IO definitions
+#include "gpio.h"           // GPIO library for AVR-GCC
+
+/* Function definitions ----------------------------------------------*/
+/**********************************************************************
+ * Function: Main function where the program execution begins
+ * Purpose:  Toggle two LEDs when a push button is pressed. Functions 
+ *           from user-defined GPIO library is used.
+ * Returns:  none
+ **********************************************************************/
+int main(void)
+{
+    // Green LED at port B
+    GPIO_config_output(&DDRB, LED_GREEN);
+    GPIO_write_low(&PORTB, LED_GREEN);
+
+    // Configure the second LED at port C
+    GPIO_config_output(&DDRC, LED_RED);
+    GPIO_write_low(&PORTC, LED_RED);
+
+    // Configure Push button at port D and enable internal pull-up resistor
+
+	GPIO_config_input_pullup(&DDRD, BUTTON);
     // Infinite loop
     while (1)
     {
@@ -44,7 +75,16 @@ Link to your `Digital-electronics-2` GitHub repository:
         _delay_ms(BLINK_DELAY);
 
         // WRITE YOUR CODE HERE
+        if(GPIO_read(&PIND, BUTTON) == 0)
+        {
+	        GPIO_toggle(&PORTB, LED_GREEN);
+	        GPIO_toggle(&PORTC, LED_RED);     
+        }		
     }
+
+    // Will never reach this
+    return 0;
+}
 ```
 
 
