@@ -1,15 +1,3 @@
-## Preparation tasks (done before the lab at home)
-
-1. Fill in the following table and enter the number of bits and numeric range for the selected data types defined by C.
-
-| **Data type** | **Number of bits** | **Range** | **Description** |
-| :-: | :-: | :-: | :-- | 
-| `uint8_t`  | 8 | 0, 1, ..., 255 | Unsigned 8-bit integer |
-| `int8_t`   |  |  |  |
-| `uint16_t` |  |  |  |
-| `int16_t`  |  |  |  |
-| `float`    |  | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
-| `void`     |  |  |  |
 
 # Lab 3: Martin Knob
 
@@ -25,18 +13,23 @@ Link to your `Digital-electronics-2` GitHub repository:
 | **Data type** | **Number of bits** | **Range** | **Description** |
 | :-: | :-: | :-: | :-- | 
 | `uint8_t`  | 8 | 0, 1, ..., 255 | Unsigned 8-bit integer |
-| `int8_t`   |  |  |  |
-| `uint16_t` |  |  |  |
-| `int16_t`  |  |  |  |
-| `float`    |  | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
-| `void`     |  |  |  |
+| `int8_t`   | 8 | -128 - 127 | Signed 8-bit Integer |
+| `uint16_t` | 16 | 0 - 65535 | Unsigned 16-bit integer |
+| `int16_t`  | 16 | -32768 - 32767 | Signed 16-bit integer |
+| `float`    | 32 | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
+| `void`     | 0 | 0 | empty data type that has no value |
 
 
 ### GPIO library
 
 1. In your words, describe the difference between the declaration and the definition of the function in C.
    * Function declaration
-   * Function definition
+   
+     V dekleraci funkce se určuje jak se bude na venek funkce chovat, určí se zde jméno funkce, vstupní parametry a návratová          hodnota.
+     
+    * Function definition
+    
+      Je to část programu, která tvoří funkci.
 
 2. Part of the C code listing with syntax highlighting, which toggles LEDs only if push button is pressed. Otherwise, the value of the LEDs does not change. Use function from your GPIO library. Let the push button is connected to port D:
 
