@@ -31,7 +31,8 @@ void GPIO_config_output(volatile uint8_t *reg_name, uint8_t pin_num)
 void GPIO_config_input_nopull(volatile uint8_t *reg_name, uint8_t pin_num)
 {
     *reg_name = *reg_name & ~(1<<pin_num);
-    reg_name++;  
+    reg_name++;
+    *reg_name = *reg_name & ~(1<<pin_num);  
 }
 
 
@@ -65,18 +66,25 @@ void GPIO_write_low(volatile uint8_t *reg_name, uint8_t pin_num)
  * Function: GPIO_write_high()
  **********************************************************************/
 
-//void GPIO_write_high(volatile uint8_t *reg_name, uint8_t pin_num)
-
+void GPIO_write_high(volatile uint8_t *reg_name, uint8_t pin_num)
+{
+	*reg_name |= (1 << pin_num);
+}
 
 /**********************************************************************
  * Function: GPIO_toggle()
  **********************************************************************/
 
-//void GPIO_toggle(volatile uint8_t *reg_name, uint8_t pin_num)
-
+void GPIO_toggle(volatile uint8_t *reg_name, uint8_t pin_num)
+{
+	*reg_name ^= (1 << pin_num);
+}
 
 /**********************************************************************
  * Function: GPIO_read()
  **********************************************************************/
 
-//uint8_t GPIO_read(volatile uint8_t *reg_name, uint8_t pin_num)
+uint8_t GPIO_read(volatile uint8_t *reg_name, uint8_t pin_num)
+{
+	return (((*reg_name) >> pin_num) & 1);
+}
