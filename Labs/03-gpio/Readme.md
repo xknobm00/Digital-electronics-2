@@ -1,15 +1,3 @@
-## Preparation tasks (done before the lab at home)
-
-1. Fill in the following table and enter the number of bits and numeric range for the selected data types defined by C.
-
-| **Data type** | **Number of bits** | **Range** | **Description** |
-| :-: | :-: | :-: | :-- | 
-| `uint8_t`  | 8 | 0, 1, ..., 255 | Unsigned 8-bit integer |
-| `int8_t`   |  |  |  |
-| `uint16_t` |  |  |  |
-| `int16_t`  |  |  |  |
-| `float`    |  | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
-| `void`     |  |  |  |
 
 # Lab 3: Martin Knob
 
@@ -25,25 +13,61 @@ Link to your `Digital-electronics-2` GitHub repository:
 | **Data type** | **Number of bits** | **Range** | **Description** |
 | :-: | :-: | :-: | :-- | 
 | `uint8_t`  | 8 | 0, 1, ..., 255 | Unsigned 8-bit integer |
-| `int8_t`   |  |  |  |
-| `uint16_t` |  |  |  |
-| `int16_t`  |  |  |  |
-| `float`    |  | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
-| `void`     |  |  |  |
+| `int8_t`   | 8 | -128 - 127 | Signed 8-bit Integer |
+| `uint16_t` | 16 | 0 - 65535 | Unsigned 16-bit integer |
+| `int16_t`  | 16 | -32768 - 32767 | Signed 16-bit integer |
+| `float`    | 32 | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
+| `void`     | 0 | 0 | empty data type that has no value |
 
 
 ### GPIO library
 
 1. In your words, describe the difference between the declaration and the definition of the function in C.
    * Function declaration
-   * Function definition
+   
+     V dekleraci funkce se určuje jak se bude na venek funkce chovat, určí se zde jméno funkce, vstupní parametry a návratová          hodnota.
+     
+    * Function definition
+    
+      Je to část programu, která tvoří funkci.
 
 2. Part of the C code listing with syntax highlighting, which toggles LEDs only if push button is pressed. Otherwise, the value of the LEDs does not change. Use function from your GPIO library. Let the push button is connected to port D:
 
 ```c
-    // Configure Push button at port D and enable internal pull-up resistor
-    // WRITE YOUR CODE HERE
+/* Defines -----------------------------------------------------------*/
+#define LED_GREEN   PB5
+#define LED_RED   PC0     // AVR pin where green LED is connected
+#define BUTTON   PD0
+#define BLINK_DELAY 500
+#ifndef F_CPU
+# define F_CPU 16000000     // CPU frequency in Hz required for delay
+#endif
 
+/* Includes ----------------------------------------------------------*/
+#include <util/delay.h>     // Functions for busy-wait delay loops
+#include <avr/io.h>         // AVR device-specific IO definitions
+#include "gpio.h"           // GPIO library for AVR-GCC
+
+/* Function definitions ----------------------------------------------*/
+/**********************************************************************
+ * Function: Main function where the program execution begins
+ * Purpose:  Toggle two LEDs when a push button is pressed. Functions 
+ *           from user-defined GPIO library is used.
+ * Returns:  none
+ **********************************************************************/
+int main(void)
+{
+    // Green LED at port B
+    GPIO_config_output(&DDRB, LED_GREEN);
+    GPIO_write_low(&PORTB, LED_GREEN);
+
+    // Configure the second LED at port C
+    GPIO_config_output(&DDRC, LED_RED);
+    GPIO_write_low(&PORTC, LED_RED);
+
+    // Configure Push button at port D and enable internal pull-up resistor
+
+	GPIO_config_input_pullup(&DDRD, BUTTON);
     // Infinite loop
     while (1)
     {
@@ -51,7 +75,16 @@ Link to your `Digital-electronics-2` GitHub repository:
         _delay_ms(BLINK_DELAY);
 
         // WRITE YOUR CODE HERE
+        if(GPIO_read(&PIND, BUTTON) == 0)
+        {
+	        GPIO_toggle(&PORTB, LED_GREEN);
+	        GPIO_toggle(&PORTC, LED_RED);     
+        }		
     }
+
+    // Will never reach this
+    return 0;
+}
 ```
 
 
@@ -59,4 +92,4 @@ Link to your `Digital-electronics-2` GitHub repository:
 
 1. Scheme of traffic light application with one red/yellow/green light for cars and one red/green light for pedestrians. Connect AVR device, LEDs, resistors, one push button (for pedestrians), and supply voltage. The image can be drawn on a computer or by hand. Always name all components and their values!
 
-   ![your figure]()
+   ![your figure](Images/traffic.png)
