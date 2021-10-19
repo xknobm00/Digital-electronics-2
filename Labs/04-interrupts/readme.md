@@ -18,8 +18,10 @@ Link to your `Digital-electronics-2` GitHub repository:
 ### Timer library
 
 1. In your words, describe the difference between common C function and interrupt service routine.
-   * Function
-   * Interrupt service routine
+   * Function - 
+     jsou to příkazy, které se vykonávají postupně
+   * Interrupt service routine - 
+     přeruší aktivní proces, zpracuje požadavek a vratí se zpět kde skončil
 
 2. Part of the header file listing with syntax highlighting, which defines settings for Timer/Counter0:
 
