@@ -3,29 +3,29 @@
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000250  2**0
+  0 .data         0000000e  00800100  0000020c  00000280  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001fc  00000000  00000000  00000054  2**1
+  1 .text         0000020c  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000250  2**0
+  2 .comment      00000030  00000000  00000000  0000028e  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000280  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002c0  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 000000a0  00000000  00000000  000002c0  2**0
+  4 .debug_aranges 000000a0  00000000  00000000  00000300  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000d65  00000000  00000000  00000360  2**0
+  5 .debug_info   00000d65  00000000  00000000  000003a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000820  00000000  00000000  000010c5  2**0
+  6 .debug_abbrev 00000820  00000000  00000000  00001105  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000004c3  00000000  00000000  000018e5  2**0
+  7 .debug_line   000004cf  00000000  00000000  00001925  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000108  00000000  00000000  00001da8  2**2
+  8 .debug_frame  00000108  00000000  00000000  00001df4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000004ab  00000000  00000000  00001eb0  2**0
+  9 .debug_str    000004ab  00000000  00000000  00001efc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000330  00000000  00000000  0000235b  2**0
+ 10 .debug_loc    00000330  00000000  00000000  000023a7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000070  00000000  00000000  0000268b  2**0
+ 11 .debug_ranges 00000070  00000000  00000000  000026d7  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -70,16 +70,16 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	ec ef       	ldi	r30, 0xFC	; 252
-  7c:	f1 e0       	ldi	r31, 0x01	; 1
+  7a:	ec e0       	ldi	r30, 0x0C	; 12
+  7c:	f2 e0       	ldi	r31, 0x02	; 2
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	a0 30       	cpi	r26, 0x00	; 0
+  84:	ae 30       	cpi	r26, 0x0E	; 14
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
   8a:	0e 94 70 00 	call	0xe0	; 0xe0 <main>
-  8e:	0c 94 fc 00 	jmp	0x1f8	; 0x1f8 <_exit>
+  8e:	0c 94 04 01 	jmp	0x208	; 0x208 <_exit>
 
 00000092 <__bad_interrupt>:
   92:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -215,178 +215,189 @@ void SEG_update_shift_regs(uint8_t segments, uint8_t position)
  122:	1f 93       	push	r17
  124:	cf 93       	push	r28
  126:	df 93       	push	r29
- 128:	18 2f       	mov	r17, r24
- 12a:	d6 2f       	mov	r29, r22
     uint8_t bit_number;
+    
+    segments = segment_value[segments];     // 0, 1, ..., 9
+ 128:	e8 2f       	mov	r30, r24
+ 12a:	f0 e0       	ldi	r31, 0x00	; 0
+ 12c:	ec 5f       	subi	r30, 0xFC	; 252
+ 12e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 130:	10 81       	ld	r17, Z
+    position = segment_position[position];  // 0, 1, 2, 3
+ 132:	e6 2f       	mov	r30, r22
+ 134:	f0 e0       	ldi	r31, 0x00	; 0
+ 136:	e0 50       	subi	r30, 0x00	; 0
+ 138:	ff 4f       	sbci	r31, 0xFF	; 255
+ 13a:	d0 81       	ld	r29, Z
 
     // Pull LATCH, CLK, and DATA low
     GPIO_write_low(&PORTD, SEG_LATCH);
- 12c:	64 e0       	ldi	r22, 0x04	; 4
- 12e:	8b e2       	ldi	r24, 0x2B	; 43
- 130:	90 e0       	ldi	r25, 0x00	; 0
- 132:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 13c:	64 e0       	ldi	r22, 0x04	; 4
+ 13e:	8b e2       	ldi	r24, 0x2B	; 43
+ 140:	90 e0       	ldi	r25, 0x00	; 0
+ 142:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
     GPIO_write_low(&PORTD, SEG_CLK);
- 136:	67 e0       	ldi	r22, 0x07	; 7
- 138:	8b e2       	ldi	r24, 0x2B	; 43
- 13a:	90 e0       	ldi	r25, 0x00	; 0
- 13c:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 146:	67 e0       	ldi	r22, 0x07	; 7
+ 148:	8b e2       	ldi	r24, 0x2B	; 43
+ 14a:	90 e0       	ldi	r25, 0x00	; 0
+ 14c:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
     GPIO_write_low(&PORTB, SEG_DATA);
- 140:	60 e0       	ldi	r22, 0x00	; 0
- 142:	85 e2       	ldi	r24, 0x25	; 37
- 144:	90 e0       	ldi	r25, 0x00	; 0
- 146:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 150:	60 e0       	ldi	r22, 0x00	; 0
+ 152:	85 e2       	ldi	r24, 0x25	; 37
+ 154:	90 e0       	ldi	r25, 0x00	; 0
+ 156:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 14a:	85 e0       	ldi	r24, 0x05	; 5
- 14c:	8a 95       	dec	r24
- 14e:	f1 f7       	brne	.-4      	; 0x14c <SEG_update_shift_regs+0x2a>
- 150:	00 00       	nop
- 152:	c8 e0       	ldi	r28, 0x08	; 8
+ 15a:	85 e0       	ldi	r24, 0x05	; 5
+ 15c:	8a 95       	dec	r24
+ 15e:	f1 f7       	brne	.-4      	; 0x15c <SEG_update_shift_regs+0x3a>
+ 160:	00 00       	nop
+ 162:	c8 e0       	ldi	r28, 0x08	; 8
     // a b c d e f g DP (active low values)
     for (bit_number = 0; bit_number < 8; bit_number++)
     {
         // Test LSB of "segments" by & (faster) or % (slower) and... 
         // ...output DATA value
-        if ((segments & 0b00000001) == 0)
- 154:	10 fd       	sbrc	r17, 0
- 156:	06 c0       	rjmp	.+12     	; 0x164 <SEG_update_shift_regs+0x42>
+    if ((segments & 0b00000001) == 0)
+ 164:	10 fd       	sbrc	r17, 0
+ 166:	06 c0       	rjmp	.+12     	; 0x174 <SEG_update_shift_regs+0x52>
         
         GPIO_write_low(&PORTB, SEG_DATA);
- 158:	60 e0       	ldi	r22, 0x00	; 0
- 15a:	85 e2       	ldi	r24, 0x25	; 37
- 15c:	90 e0       	ldi	r25, 0x00	; 0
- 15e:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
- 162:	05 c0       	rjmp	.+10     	; 0x16e <SEG_update_shift_regs+0x4c>
+ 168:	60 e0       	ldi	r22, 0x00	; 0
+ 16a:	85 e2       	ldi	r24, 0x25	; 37
+ 16c:	90 e0       	ldi	r25, 0x00	; 0
+ 16e:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 172:	05 c0       	rjmp	.+10     	; 0x17e <SEG_update_shift_regs+0x5c>
         
         else
         
         GPIO_write_high(&PORTB, SEG_DATA);
- 164:	60 e0       	ldi	r22, 0x00	; 0
- 166:	85 e2       	ldi	r24, 0x25	; 37
- 168:	90 e0       	ldi	r25, 0x00	; 0
- 16a:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
- 16e:	85 e0       	ldi	r24, 0x05	; 5
- 170:	8a 95       	dec	r24
- 172:	f1 f7       	brne	.-4      	; 0x170 <SEG_update_shift_regs+0x4e>
- 174:	00 00       	nop
+ 174:	60 e0       	ldi	r22, 0x00	; 0
+ 176:	85 e2       	ldi	r24, 0x25	; 37
+ 178:	90 e0       	ldi	r25, 0x00	; 0
+ 17a:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
+ 17e:	85 e0       	ldi	r24, 0x05	; 5
+ 180:	8a 95       	dec	r24
+ 182:	f1 f7       	brne	.-4      	; 0x180 <SEG_update_shift_regs+0x5e>
+ 184:	00 00       	nop
         // Wait 1 us
         _delay_us(1);
         // Pull CLK high
         GPIO_write_high(&PORTD, SEG_CLK);
- 176:	67 e0       	ldi	r22, 0x07	; 7
- 178:	8b e2       	ldi	r24, 0x2B	; 43
- 17a:	90 e0       	ldi	r25, 0x00	; 0
- 17c:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
- 180:	85 e0       	ldi	r24, 0x05	; 5
- 182:	8a 95       	dec	r24
- 184:	f1 f7       	brne	.-4      	; 0x182 <SEG_update_shift_regs+0x60>
- 186:	00 00       	nop
+ 186:	67 e0       	ldi	r22, 0x07	; 7
+ 188:	8b e2       	ldi	r24, 0x2B	; 43
+ 18a:	90 e0       	ldi	r25, 0x00	; 0
+ 18c:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
+ 190:	85 e0       	ldi	r24, 0x05	; 5
+ 192:	8a 95       	dec	r24
+ 194:	f1 f7       	brne	.-4      	; 0x192 <SEG_update_shift_regs+0x70>
+ 196:	00 00       	nop
         // Wait 1 us
         _delay_us(1);
         // Pull CLK low
         GPIO_write_low(&PORTD, SEG_CLK);
- 188:	67 e0       	ldi	r22, 0x07	; 7
- 18a:	8b e2       	ldi	r24, 0x2B	; 43
- 18c:	90 e0       	ldi	r25, 0x00	; 0
- 18e:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 198:	67 e0       	ldi	r22, 0x07	; 7
+ 19a:	8b e2       	ldi	r24, 0x2B	; 43
+ 19c:	90 e0       	ldi	r25, 0x00	; 0
+ 19e:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
         // Shift "segments"
         segments = segments >> 1;
- 192:	16 95       	lsr	r17
- 194:	c1 50       	subi	r28, 0x01	; 1
+ 1a2:	16 95       	lsr	r17
+ 1a4:	c1 50       	subi	r28, 0x01	; 1
     GPIO_write_low(&PORTB, SEG_DATA);
     // Wait 1 us
     _delay_us(1);
     // Loop through the 1st byte (segments)
     // a b c d e f g DP (active low values)
     for (bit_number = 0; bit_number < 8; bit_number++)
- 196:	f1 f6       	brne	.-68     	; 0x154 <SEG_update_shift_regs+0x32>
- 198:	c8 e0       	ldi	r28, 0x08	; 8
+ 1a6:	f1 f6       	brne	.-68     	; 0x164 <SEG_update_shift_regs+0x42>
+ 1a8:	c8 e0       	ldi	r28, 0x08	; 8
     // p3 p2 p1 p0 . . . . (active high values)
     for (bit_number = 0; bit_number < 8; bit_number++)
     {
         // Test LSB of "position" by & (faster) or % (slower) and... 
         // ...output DATA value
         if ((position & 0b00000001) == 0)
- 19a:	d0 fd       	sbrc	r29, 0
- 19c:	06 c0       	rjmp	.+12     	; 0x1aa <SEG_update_shift_regs+0x88>
+ 1aa:	d0 fd       	sbrc	r29, 0
+ 1ac:	06 c0       	rjmp	.+12     	; 0x1ba <SEG_update_shift_regs+0x98>
         
         GPIO_write_low(&PORTB, SEG_DATA);
- 19e:	60 e0       	ldi	r22, 0x00	; 0
- 1a0:	85 e2       	ldi	r24, 0x25	; 37
- 1a2:	90 e0       	ldi	r25, 0x00	; 0
- 1a4:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
- 1a8:	05 c0       	rjmp	.+10     	; 0x1b4 <SEG_update_shift_regs+0x92>
+ 1ae:	60 e0       	ldi	r22, 0x00	; 0
+ 1b0:	85 e2       	ldi	r24, 0x25	; 37
+ 1b2:	90 e0       	ldi	r25, 0x00	; 0
+ 1b4:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 1b8:	05 c0       	rjmp	.+10     	; 0x1c4 <SEG_update_shift_regs+0xa2>
         
         else
         
         GPIO_write_high(&PORTB, SEG_DATA);
- 1aa:	60 e0       	ldi	r22, 0x00	; 0
- 1ac:	85 e2       	ldi	r24, 0x25	; 37
- 1ae:	90 e0       	ldi	r25, 0x00	; 0
- 1b0:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
- 1b4:	85 e0       	ldi	r24, 0x05	; 5
- 1b6:	8a 95       	dec	r24
- 1b8:	f1 f7       	brne	.-4      	; 0x1b6 <SEG_update_shift_regs+0x94>
- 1ba:	00 00       	nop
+ 1ba:	60 e0       	ldi	r22, 0x00	; 0
+ 1bc:	85 e2       	ldi	r24, 0x25	; 37
+ 1be:	90 e0       	ldi	r25, 0x00	; 0
+ 1c0:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
+ 1c4:	85 e0       	ldi	r24, 0x05	; 5
+ 1c6:	8a 95       	dec	r24
+ 1c8:	f1 f7       	brne	.-4      	; 0x1c6 <SEG_update_shift_regs+0xa4>
+ 1ca:	00 00       	nop
         // Wait 1 us
         _delay_us(1);
         // Pull CLK high
         GPIO_write_high(&PORTD, SEG_CLK);
- 1bc:	67 e0       	ldi	r22, 0x07	; 7
- 1be:	8b e2       	ldi	r24, 0x2B	; 43
- 1c0:	90 e0       	ldi	r25, 0x00	; 0
- 1c2:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
- 1c6:	85 e0       	ldi	r24, 0x05	; 5
- 1c8:	8a 95       	dec	r24
- 1ca:	f1 f7       	brne	.-4      	; 0x1c8 <SEG_update_shift_regs+0xa6>
- 1cc:	00 00       	nop
+ 1cc:	67 e0       	ldi	r22, 0x07	; 7
+ 1ce:	8b e2       	ldi	r24, 0x2B	; 43
+ 1d0:	90 e0       	ldi	r25, 0x00	; 0
+ 1d2:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
+ 1d6:	85 e0       	ldi	r24, 0x05	; 5
+ 1d8:	8a 95       	dec	r24
+ 1da:	f1 f7       	brne	.-4      	; 0x1d8 <SEG_update_shift_regs+0xb6>
+ 1dc:	00 00       	nop
         // Wait 1 us
         _delay_us(1);
         // Pull CLK low
         GPIO_write_low(&PORTD, SEG_CLK);
- 1ce:	67 e0       	ldi	r22, 0x07	; 7
- 1d0:	8b e2       	ldi	r24, 0x2B	; 43
- 1d2:	90 e0       	ldi	r25, 0x00	; 0
- 1d4:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
+ 1de:	67 e0       	ldi	r22, 0x07	; 7
+ 1e0:	8b e2       	ldi	r24, 0x2B	; 43
+ 1e2:	90 e0       	ldi	r25, 0x00	; 0
+ 1e4:	0e 94 57 00 	call	0xae	; 0xae <GPIO_write_low>
         // Shift "position"
         position = position >> 1;
- 1d8:	d6 95       	lsr	r29
- 1da:	c1 50       	subi	r28, 0x01	; 1
+ 1e8:	d6 95       	lsr	r29
+ 1ea:	c1 50       	subi	r28, 0x01	; 1
         segments = segments >> 1;
     }
 
     // Loop through the 2nd byte (position)
     // p3 p2 p1 p0 . . . . (active high values)
     for (bit_number = 0; bit_number < 8; bit_number++)
- 1dc:	f1 f6       	brne	.-68     	; 0x19a <SEG_update_shift_regs+0x78>
+ 1ec:	f1 f6       	brne	.-68     	; 0x1aa <SEG_update_shift_regs+0x88>
         // Shift "position"
         position = position >> 1;
     }
 
     // Pull LATCH high
     GPIO_write_high(&PORTD, SEG_LATCH);
- 1de:	64 e0       	ldi	r22, 0x04	; 4
- 1e0:	8b e2       	ldi	r24, 0x2B	; 43
- 1e2:	90 e0       	ldi	r25, 0x00	; 0
- 1e4:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
- 1e8:	85 e0       	ldi	r24, 0x05	; 5
- 1ea:	8a 95       	dec	r24
- 1ec:	f1 f7       	brne	.-4      	; 0x1ea <SEG_update_shift_regs+0xc8>
- 1ee:	00 00       	nop
+ 1ee:	64 e0       	ldi	r22, 0x04	; 4
+ 1f0:	8b e2       	ldi	r24, 0x2B	; 43
+ 1f2:	90 e0       	ldi	r25, 0x00	; 0
+ 1f4:	0e 94 64 00 	call	0xc8	; 0xc8 <GPIO_write_high>
+ 1f8:	85 e0       	ldi	r24, 0x05	; 5
+ 1fa:	8a 95       	dec	r24
+ 1fc:	f1 f7       	brne	.-4      	; 0x1fa <SEG_update_shift_regs+0xd8>
+ 1fe:	00 00       	nop
     // Wait 1 us
     _delay_us(1);
 }
- 1f0:	df 91       	pop	r29
- 1f2:	cf 91       	pop	r28
- 1f4:	1f 91       	pop	r17
- 1f6:	08 95       	ret
+ 200:	df 91       	pop	r29
+ 202:	cf 91       	pop	r28
+ 204:	1f 91       	pop	r17
+ 206:	08 95       	ret
 
-000001f8 <_exit>:
- 1f8:	f8 94       	cli
+00000208 <_exit>:
+ 208:	f8 94       	cli
 
-000001fa <__stop_program>:
- 1fa:	ff cf       	rjmp	.-2      	; 0x1fa <__stop_program>
+0000020a <__stop_program>:
+ 20a:	ff cf       	rjmp	.-2      	; 0x20a <__stop_program>

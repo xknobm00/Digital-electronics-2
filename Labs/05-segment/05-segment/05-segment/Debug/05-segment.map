@@ -26,10 +26,6 @@ Discarded input sections
  .text          0x00000000        0x0 segment.o
  .data          0x00000000        0x0 segment.o
  .bss           0x00000000        0x0 segment.o
- .data.segment_position
-                0x00000000        0x4 segment.o
- .data.segment_value
-                0x00000000        0xa segment.o
  .text          0x00000000        0x0 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -191,7 +187,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x1fc
+.text           0x00000000      0x20c
  *(.vectors)
  .vectors       0x00000000       0x68 C:/APPZ/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -293,13 +289,13 @@ END GROUP
                 0x00000102       0x20 segment.o
                 0x00000102                SEG_init
  .text.SEG_update_shift_regs
-                0x00000122       0xd6 segment.o
+                0x00000122       0xe6 segment.o
                 0x00000122                SEG_update_shift_regs
-                0x000001f8                . = ALIGN (0x2)
+                0x00000208                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000001f8        0x0 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000001f8                _exit
-                0x000001f8                exit
+ .fini9         0x00000208        0x0 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000208                _exit
+                0x00000208                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -318,36 +314,42 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000001f8        0x4 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000208        0x4 c:/appz/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000001fc                _etext = .
+                0x0000020c                _etext = .
 
-.data           0x00800100        0x0 load address 0x000001fc
+.data           0x00800100        0xe load address 0x0000020c
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
+ .data.segment_position
+                0x00800100        0x4 segment.o
+                0x00800100                segment_position
+ .data.segment_value
+                0x00800104        0xa segment.o
+                0x00800104                segment_value
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
  *(.gnu.linkonce.r*)
-                0x00800100                . = ALIGN (0x2)
-                0x00800100                _edata = .
-                0x00800100                PROVIDE (__data_end, .)
+                0x0080010e                . = ALIGN (0x2)
+                0x0080010e                _edata = .
+                0x0080010e                PROVIDE (__data_end, .)
 
-.bss            0x00800100        0x0
+.bss            0x0080010e        0x0
                 [!provide]                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x000001fc                __data_load_start = LOADADDR (.data)
-                0x000001fc                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000020c                __data_load_start = LOADADDR (.data)
+                0x0000021a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800100        0x0
+.noinit         0x0080010e        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800100                _end = .
+                0x0080010e                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -440,12 +442,12 @@ END GROUP
  .debug_abbrev  0x0000063d       0x97 main.o
  .debug_abbrev  0x000006d4      0x14c segment.o
 
-.debug_line     0x00000000      0x4c3
+.debug_line     0x00000000      0x4cf
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/APPZ/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000133      0x12b gpio.o
  .debug_line    0x0000025e       0x68 main.o
- .debug_line    0x000002c6      0x1fd segment.o
+ .debug_line    0x000002c6      0x209 segment.o
 
 .debug_frame    0x00000000      0x108
  *(.debug_frame)
