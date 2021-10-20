@@ -17,15 +17,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   6 .debug_abbrev 000006e5  00000000  00000000  00000ba6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000032e  00000000  00000000  0000128b  2**0
+  7 .debug_line   0000034c  00000000  00000000  0000128b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000100  00000000  00000000  000015bc  2**2
+  8 .debug_frame  00000100  00000000  00000000  000015d8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003ff  00000000  00000000  000016bc  2**0
+  9 .debug_str    00000415  00000000  00000000  000016d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000015d  00000000  00000000  00001abb  2**0
+ 10 .debug_loc    0000015d  00000000  00000000  00001aed  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000058  00000000  00000000  00001c18  2**0
+ 11 .debug_ranges 00000058  00000000  00000000  00001c4a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -146,7 +146,7 @@ int main(void)
     // Configuration of 16-bit Timer/Counter1 for LED blinking
     // Set the overflow prescaler to 262 ms and enable interrupt
     TIM1_overflow_262ms();
-  de:	e1 e8       	ldi	r30, 0x81	; 129
+  de:	e1 eb       	ldi	r30, 0xB1	; 177
   e0:	f0 e0       	ldi	r31, 0x00	; 0
   e2:	80 81       	ld	r24, Z
   e4:	8b 7f       	andi	r24, 0xFB	; 251
@@ -155,7 +155,7 @@ int main(void)
   ea:	83 60       	ori	r24, 0x03	; 3
   ec:	80 83       	st	Z, r24
     TIM1_overflow_interrupt_enable();
-  ee:	ef e6       	ldi	r30, 0x6F	; 111
+  ee:	e0 e7       	ldi	r30, 0x70	; 112
   f0:	f0 e0       	ldi	r31, 0x00	; 0
   f2:	80 81       	ld	r24, Z
   f4:	81 60       	ori	r24, 0x01	; 1
