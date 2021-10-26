@@ -27,28 +27,28 @@ Link to your `Digital-electronics-2` GitHub repository:
 2. Code listing with syntax highlighting of two interrupt service routines (`TIMER0_OVF_vect`, `TIMER0_OVF_vect`) from counter application with at least two digits, ie. values from 00 to 59:
 
 ```c
-/**********************************************************************
- * Function: Timer/Counter1 overflow interrupt
- * Purpose:  Increment counter value from 00 to 59.
- **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-    // WRITE YOUR CODE HERE
-
+	// WRITE YOUR CODE HERE
+	cnt0++;
+	if (cnt0 > 9)
+	{
+		cnt0 = 0;
+		cnt1++;
+		if (cnt1 > 5)
+		(cnt1 = 0);
+	}
 }
-```
 
-```c
-/**********************************************************************
- * Function: Timer/Counter0 overflow interrupt
- * Purpose:  Display tens and units of a counter at SSD.
- **********************************************************************/
 ISR(TIMER0_OVF_vect)
 {
-    static uint8_t pos = 0;
-
-    // WRITE YOUR CODE HERE
-
+	static uint8_t pos = 0;  // This line will only run the first time
+	cnt0++;
+	if (cnt0 > 9)
+	cnt0 = 0;
+	
+	SEG_update_shift_regs(cnt0, 0);
+	SEG_update_shift_regs(cnt1, 0);
 }
 ```
 
@@ -63,4 +63,4 @@ Consider a kitchen alarm with a 7-segment display, one LED and three push button
 
 1. Scheme of kitchen alarm; do not forget the supply voltage. The image can be drawn on a computer or by hand. Always name all components and their values.
 
-   ![your figure]()
+   ![your figure](Images/alarm.png)
