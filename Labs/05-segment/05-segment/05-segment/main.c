@@ -15,6 +15,9 @@
 #include "timer.h"          // Timer library for AVR-GCC
 #include "segment.h"        // Seven-segment display library for AVR-GCC
 
+volatile uint8_t cnt1 = 0;
+volatile uint8_t cnt0 = 0;
+
 /* Function definitions ----------------------------------------------*/
 /**********************************************************************
  * Function: Main function where the program execution begins
@@ -28,12 +31,20 @@ int main(void)
     SEG_init();
 
     // Test of SSD: display number '3' at position 0
-    SEG_update_shift_regs(3, 0);
+   // SEG_update_shift_regs(cnt0, cnt1);
 
     // Configure 16-bit Timer/Counter1 for Decimal counter
     // Set the overflow prescaler to 262 ms and enable interrupt
 
+    TIM1_overflow_262ms();
+    TIM1_overflow_interrupt_enable();
+    
+    TIM0_overflow_4ms();
+    TIM0_overflow_interrupt_enable();
+    
 
+
+    sei();
     // Enables interrupts by setting the global interrupt mask
 
 
@@ -55,6 +66,24 @@ int main(void)
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-    // WRITE YOUR CODE HERE
+	// WRITE YOUR CODE HERE
+	cnt0++;
+	if (cnt0 > 9)
+	{
+		cnt0 = 0;
+		cnt1++;
+		if (cnt1 > 5)
+		(cnt1 = 0);
+	}
+}
 
+ISR(TIMER0_OVF_vect)
+{
+	static uint8_t pos = 0;  // This line will only run the first time
+	cnt0++;
+	if (cnt0 > 9)
+	cnt0 = 0;
+	
+	SEG_update_shift_regs(cnt0, 0);
+	SEG_update_shift_regs(cnt1, 0);
 }
