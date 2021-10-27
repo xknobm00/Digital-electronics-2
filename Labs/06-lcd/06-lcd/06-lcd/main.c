@@ -1,9 +1,9 @@
 /***********************************************************************
  * 
- * Decimal counter with 7-segment output.
+ * Stopwatch with LCD display output.
  * ATmega328P (Arduino Uno), 16 MHz, AVR 8-bit Toolchain 3.6.2
  *
- * Copyright (c) 2018-Present Tomas Fryza
+ * Copyright (c) 2017-Present Tomas Fryza
  * Dept. of Radio Electronics, Brno University of Technology, Czechia
  * This work is licensed under the terms of the MIT license.
  * 
@@ -13,40 +13,39 @@
 #include <avr/io.h>         // AVR device-specific IO definitions
 #include <avr/interrupt.h>  // Interrupts standard C library for AVR-GCC
 #include "timer.h"          // Timer library for AVR-GCC
-#include "segment.h"        // Seven-segment display library for AVR-GCC
-
-volatile uint8_t cnt1 = 0;
-volatile uint8_t cnt0 = 0;
+#include "lcd.h"            // Peter Fleury's LCD library
+#include <stdlib.h>         // C library. Needed for conversion function
 
 /* Function definitions ----------------------------------------------*/
 /**********************************************************************
  * Function: Main function where the program execution begins
- * Purpose:  Display decimal counter values on SSD (Seven-segment 
- *           display) when 16-bit Timer/Counter1 overflows.
+ * Purpose:  Update stopwatch value on LCD display when 8-bit 
+ *           Timer/Counter2 overflows.
  * Returns:  none
  **********************************************************************/
 int main(void)
 {
-    // Configure SSD signals
-    SEG_init();
+    // Initialize LCD display
+    lcd_init(LCD_DISP_ON);
 
-    // Test of SSD: display number '3' at position 0
-   // SEG_update_shift_regs(cnt0, cnt1);
+    // Put string(s) at LCD display
+    lcd_gotoxy(1, 0);
+    lcd_puts("00:00.0");
+    lcd_gotoxy(11, 0);
+    lcd_putc('a');
+    lcd_gotoxy(1, 1);
+    lcd_putc('b');
+    lcd_gotoxy(11, 1);
+    lcd_putc('c');
+    lcd_gotoxy(12, 1);
+    lcd_putc('_');
 
-    // Configure 16-bit Timer/Counter1 for Decimal counter
-    // Set the overflow prescaler to 262 ms and enable interrupt
-
-    TIM1_overflow_262ms();
-    TIM1_overflow_interrupt_enable();
-    
-    TIM0_overflow_4ms();
-    TIM0_overflow_interrupt_enable();
-    
+    // Configure 8-bit Timer/Counter2 for Stopwatch
+    // Set the overflow prescaler to 16 ms and enable interrupt
 
 
-    sei();
     // Enables interrupts by setting the global interrupt mask
-
+    sei();
 
     // Infinite loop
     while (1)
@@ -61,29 +60,25 @@ int main(void)
 
 /* Interrupt service routines ----------------------------------------*/
 /**********************************************************************
- * Function: Timer/Counter1 overflow interrupt
- * Purpose:  Increment decimal counter value and display it on SSD.
+ * Function: Timer/Counter2 overflow interrupt
+ * Purpose:  Update the stopwatch on LCD display every sixth overflow,
+ *           ie approximately every 100 ms (6 x 16 ms = 100 ms).
  **********************************************************************/
-ISR(TIMER1_OVF_vect)
+ISR(TIMER2_OVF_vect)
 {
-	// WRITE YOUR CODE HERE
-	cnt0++;
-	if (cnt0 > 9)
-	{
-		cnt0 = 0;
-		cnt1++;
-		if (cnt1 > 5)
-		(cnt1 = 0);
-	}
-}
+    static uint8_t number_of_overflows = 0;
+    static uint8_t tens = 0;        // Tenths of a second
+    static uint8_t secs = 0;        // Seconds
+    char lcd_string[2] = "  ";      // String for converting numbers by itoa()
 
-ISR(TIMER0_OVF_vect)
-{
-	static uint8_t pos = 0;  // This line will only run the first time
-	cnt0++;
-	if (cnt0 > 9)
-	cnt0 = 0;
-	
-	SEG_update_shift_regs(cnt0, 0);
-	SEG_update_shift_regs(cnt1, 0);
+    number_of_overflows++;
+    if (number_of_overflows >= 6)
+    {
+        // Do this every 6 x 16 ms = 100 ms
+        number_of_overflows = 0;
+
+        // WRITE YOUR CODE HERE
+
+    }
+    // Else do nothing and exit the ISR
 }
