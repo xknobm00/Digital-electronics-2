@@ -1,13 +1,3 @@
-| **Function name** | **Function parameters** | **Description** | **Example** |
-   | :-- | :-- | :-- | :-- |
-   | `lcd_init` | `LCD_DISP_OFF`<br>`LCD_DISP_ON`<br>`LCD_DISP_ON_CURSOR`<br>`LCD_DISP_ON_CURSOR_BLINK` | Display off&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp; | `lcd_init(LCD_DISP_OFF);`<br>&nbsp;<br>&nbsp;<br>&nbsp; |
-   | `lcd_clrscr` | | | `lcd_clrscr();` |
-   | `lcd_gotoxy` | | | |
-   | `lcd_putc` | | | |
-   | `lcd_puts` | | | |
-   | `lcd_command` | | | |
-   | `lcd_data` | | | |
-
 # Lab 6: Martin Knob
 
 Link to your `Digital-electronics-2` GitHub repository:
@@ -18,7 +8,7 @@ Link to your `Digital-electronics-2` GitHub repository:
 ### LCD display module
 
 1. In your words, describe what ASCII table is.
-   * ASCII
+   * ASCII - je to ASCII tabulka která dosahovala hodnoty 256 znaků a každému ASCII kódu (číselnému kódu) přiřazovala jeden znak
 
 2. (Hand-drawn) picture of time signals between ATmega328P and LCD keypad shield (HD44780 driver) when transmitting three character data `De2`.
 
