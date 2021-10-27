@@ -15,8 +15,7 @@ main.d main.o: .././main.c \
  c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  .././lcd_definitions.h \
- c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
- c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h
+ c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h
 
 c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -53,5 +52,3 @@ c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\inc
 .././lcd_definitions.h:
 
 c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
-
-c:\appz\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h:

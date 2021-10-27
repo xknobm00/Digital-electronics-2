@@ -23,22 +23,34 @@
  *           Timer/Counter2 overflows.
  * Returns:  none
  **********************************************************************/
+uint8_t customChar[8] = {
+    0b10101,
+    0b01010,
+    0b10101,
+    0b01010,
+    0b10101,
+    0b01010,
+    0b10101,
+    0b01010
+};
 int main(void)
 {
     // Initialize LCD display
     lcd_init(LCD_DISP_ON);
 
-    // Put string(s) at LCD display
-    lcd_gotoxy(1, 0);
-    lcd_puts("00:00.0");
-    lcd_gotoxy(11, 0);
-    lcd_putc('a');
-    lcd_gotoxy(1, 1);
-    lcd_putc('b');
-    lcd_gotoxy(11, 1);
-    lcd_putc('c');
-    lcd_gotoxy(12, 1);
-    lcd_putc('_');
+    // Set pointer to beginning of CGRAM memory
+    lcd_command(1 << LCD_CGRAM);
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        // Store all new chars to memory line by line
+        lcd_data(customChar[i]);
+    }
+    // Set DDRAM address
+    lcd_command(1 << LCD_DDRAM);
+    
+    // Display first custom character
+    lcd_putc(0);
+    lcd_putc(1);
 
     // Configure 8-bit Timer/Counter2 for Stopwatch
     // Set the overflow prescaler to 16 ms and enable interrupt
