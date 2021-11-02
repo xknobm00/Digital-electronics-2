@@ -1,3 +1,15 @@
+
+  
+
+   | **Push button** | **PC0[A0] voltage** | **ADC value (calculated)** | **ADC value (measured)** |
+   | :-: | :-: | :-: | :-: |
+   | Right  | 0&nbsp;V | 0 | todo |
+   | Up     | 0.495&nbsp;V | 101 | todo |
+   | Down   | 1.203&nbsp;V | 246 | todo |
+   | Left   | 1.970&nbsp;V | 403 | todo |
+   | Select | 3.182&nbsp;V | 651 | todo |
+   | none   | 5&nbsp;V | 1023 | todo |
+   
 # Lab 7: Martin Knob
 
 Link to your `Digital-electronics-2` GitHub repository:
