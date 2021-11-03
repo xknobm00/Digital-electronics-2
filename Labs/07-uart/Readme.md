@@ -1,26 +1,5 @@
 
-     | **Operation** | **Register(s)** | **Bit(s)** | **Description** |
-   | :-- | :-: | :-: | :-- |
-   | Voltage reference    | ADMUX | REFS1:0 | 00: ..., 01: AVcc voltage reference (5V), ... |
-   | Input channel        | ADMUX | MUX3:0 | 0000: ADC0, 0001: ADC1, ... |
-   | ADC enable           | ADCSRA |  |  |
-   | Start conversion     | ADSC |  |  |
-   | ADC interrupt enable |  |  |  |
-   | ADC clock prescaler  |  | ADPS2:0 | 000: Division factor 2, 001: 2, 010: 4, ...|
-   | ADC 10-bit result    |  |  |  |
-  
-  
-  
-  
 
-   | **Push button** | **PC0[A0] voltage** | **ADC value (calculated)** | **ADC value (measured)** |
-   | :-: | :-: | :-: | :-: |
-   | Right  | 0&nbsp;V | 0 | 0 |
-   | Up     | 0.495&nbsp;V | 101 | 99 |
-   | Down   | 1.203&nbsp;V | 246 | 257 |
-   | Left   | 1.970&nbsp;V | 403 | 410 |
-   | Select | 3.182&nbsp;V | 651 | 640 |
-   | none   | 5&nbsp;V | 1023 | 1023 |
    
 # Lab 7: Martin Knob
 
@@ -32,15 +11,14 @@ Link to your `Digital-electronics-2` GitHub repository:
 ### Analog-to-Digital Conversion
 
 1. Complete table with voltage divider, calculated, and measured ADC values for all five push buttons.
-
    | **Push button** | **PC0[A0] voltage** | **ADC value (calculated)** | **ADC value (measured)** |
    | :-: | :-: | :-: | :-: |
-   | Right  | 0&nbsp;V | 0   |  |
-   | Up     | 0.495&nbsp;V | 101 |  |
-   | Down   |       |     |  |
-   | Left   |       |     |  |
-   | Select |       |     |  |
-   | none   |       |     |  |
+   | Right  | 0&nbsp;V | 0 | 0 |
+   | Up     | 0.495&nbsp;V | 101 | 99 |
+   | Down   | 1.203&nbsp;V | 246 | 257 |
+   | Left   | 1.970&nbsp;V | 403 | 410 |
+   | Select | 3.182&nbsp;V | 651 | 640 |
+   | none   | 5&nbsp;V | 1023 | 1023 |
 
 2. Code listing of ACD interrupt service routine for sending data to the LCD/UART and identification of the pressed button. Always use syntax highlighting and meaningful comments:
 
