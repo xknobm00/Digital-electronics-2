@@ -29,13 +29,71 @@ Link to your `Digital-electronics-2` GitHub repository:
  **********************************************************************/
 ISR(ADC_vect)
 {
+
     uint16_t value = 0;
     char lcd_string[4] = "0000";
 
     value = ADC;                  // Copy ADC result to 16-bit variable
     itoa(value, lcd_string, 10);  // Convert decimal value to string
+ 
+    lcd_clrscr();
+    
+    lcd_gotoxy(1, 0); lcd_puts("value:");
+    lcd_gotoxy(3, 1); lcd_puts("key:");
+    
+	if(value == 0)
+	{
+		lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+		itoa(value, lcd_string, 16);
+		lcd_gotoxy(8, 1); lcd_puts("Right");					
+		lcd_gotoxy(13,0); lcd_puts(lcd_string);					
+		uart_puts(lcd_string); uart_puts("\n\r");			
+	}
+	
+	else if(value == 99)
+	{
+		lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+		itoa(value, lcd_string, 16);
+		lcd_gotoxy(8, 1); lcd_puts("Up");
+		lcd_gotoxy(13,0); lcd_puts(lcd_string);
+		uart_puts(lcd_string); uart_puts("\n\r");
+	}
+	
+	else if(value == 257)
+	{
+		lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+		itoa(value, lcd_string, 16);
+		lcd_gotoxy(8, 1); lcd_puts("Down");
+		lcd_gotoxy(13,0); lcd_puts(lcd_string);
+		uart_puts(lcd_string); uart_puts("\n\r");
+	}
+    
+	else if(value == 410)
+	{
+		lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+		itoa(value, lcd_string, 16);
+		lcd_gotoxy(8, 1); lcd_puts("Left");
+		lcd_gotoxy(13,0); lcd_puts(lcd_string);
+		uart_puts(lcd_string); uart_puts("\n\r");
+	}
 
-    // WRITE YOUR CODE HERE
+	else if(value == 640)
+	{
+		lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+		itoa(value, lcd_string, 16);
+		lcd_gotoxy(8, 1); lcd_puts("Select");
+		lcd_gotoxy(13,0); lcd_puts(lcd_string);
+		uart_puts(lcd_string); uart_puts("\n\r");
+	}
+
+	else (value == 1023)
+	{
+		lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+		itoa(value, lcd_string, 16);
+		lcd_gotoxy(8, 1); lcd_puts("none");
+		lcd_gotoxy(13,0); lcd_puts(lcd_string);
+		uart_puts(lcd_string); uart_puts("\n\r");
+	}
 
 }
 ```
