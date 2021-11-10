@@ -1,11 +1,11 @@
    | **Function name** | **Function parameters** | **Description** | **Example** |
    | :-- | :-- | :-- | :-- |
    | `twi_init` | None | Initialize TWI, enable internal pull-up resistors, and set SCL frequency | `twi_init();` |
-   | `twi_start` | 0 - Slave device accessible, 1 - Failed to access slave device  | <br>&nbsp; | `twi_start((addr<<1)+TWI_READ);` |
-   | `twi_write` |  | <br>&nbsp; |  |
-   | `twi_read_ack` | <br>&nbsp; |  |  |
-   | `twi_read_nack` | <br>&nbsp; |  |  |
-   | `twi_stop` |  |  | `twi_stop();` |
+   | `twi_start` | 0 - Slave device accessible, 1 - Failed to access slave device  | slave_address SLA+R or SLA+W address | `twi_start((addr<<1)+TWI_READ);` |
+   | `twi_write` | none | data Byte to be transmitted |  |
+   | `twi_read_ack` | Received data byte | Read one byte from TWI slave device and acknowledge it by ACK |  |
+   | `twi_read_nack` | Received data byte | Read one byte from TWI slave device and acknowledge it by NACK |  |
+   | `twi_stop` | none | Generates stop condition on TWI bus. | `twi_stop();` |
 
 
 1. Use schematic of the [Arduino Uno](../../Docs/arduino_shield.pdf) board and find out to which pins the SDA and SCL signals are connected.
