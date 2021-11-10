@@ -1,3 +1,15 @@
+   | **Function name** | **Function parameters** | **Description** | **Example** |
+   | :-- | :-- | :-- | :-- |
+   | `twi_init` | None | Initialize TWI, enable internal pull-up resistors, and set SCL frequency | `twi_init();` |
+   | `twi_start` | 0 - Slave device accessible
+1 - Failed to access slave device
+ | <br>&nbsp; | `twi_start((addr<<1)+TWI_READ);` |
+   | `twi_write` |  | <br>&nbsp; |  |
+   | `twi_read_ack` | <br>&nbsp; |  |  |
+   | `twi_read_nack` | <br>&nbsp; |  |  |
+   | `twi_stop` |  |  | `twi_stop();` |
+
+
 1. Use schematic of the [Arduino Uno](../../Docs/arduino_shield.pdf) board and find out to which pins the SDA and SCL signals are connected.
 
    | **Signal** | **MCU pin** | **Arduino pin(s)** |
